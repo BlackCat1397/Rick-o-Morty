@@ -1,9 +1,13 @@
 import React, { useCallback, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-import { Character, getCharacters } from './api';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+import { Character, getCharacters } from './api';
+
+import { useRefresh } from './hooks/useRefresh.ts';
+
 import { RootStackParamList } from '../App.tsx';
 import Photo from './Photo.tsx';
 
@@ -59,6 +63,8 @@ const CharactersList = () => {
     }, [getPopular]),
   );
 
+  const { isRefreshing, handleRefresh } = useRefresh(getPopular);
+
   return (
     <FlatList
       keyExtractor={item => item.id}
@@ -66,6 +72,8 @@ const CharactersList = () => {
       onEndReached={getPopular}
       onEndReachedThreshold={0.3}
       scrollEventThrottle={16}
+      refreshing={isRefreshing}
+      onRefresh={handleRefresh}
       ListEmptyComponent={<Loader />}
       contentContainerStyle={styles.contentContainer}
       renderItem={({ item }) => <CharacterItem {...item} />}
