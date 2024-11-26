@@ -1,4 +1,4 @@
-package com.ventionsandbox
+package com.ventionteams.ge.sandbox
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

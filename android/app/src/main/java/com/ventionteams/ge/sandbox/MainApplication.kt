@@ -1,4 +1,4 @@
-package com.ventionsandbox
+package com.ventionteams.ge.sandbox
 
 import android.app.Application
 import com.facebook.react.PackageList
