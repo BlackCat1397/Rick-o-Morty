@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import { Character, getCharacters } from './api';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
@@ -19,6 +19,12 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 10,
     backgroundColor: 'grey',
+  },
+  contentContainer: {
+    flex: 1,
+  },
+  loader: {
+    flex: 1,
   },
   image: {
     width: 70,
@@ -60,9 +66,8 @@ const CharactersList = () => {
       onEndReached={getPopular}
       onEndReachedThreshold={0.3}
       scrollEventThrottle={16}
-      // refreshing={true}
-      // onRefresh={getPopular}
-      ListEmptyComponent={<Text>Loading...</Text>}
+      ListEmptyComponent={<Loader />}
+      contentContainerStyle={styles.contentContainer}
       renderItem={({ item }) => <CharacterItem {...item} />}
     />
   );
@@ -82,6 +87,14 @@ const CharacterItem = ({ name, image, id }: Character) => {
       <Photo style={styles.image} image={image} />
       <Text style={styles.text}>{name}</Text>
     </TouchableOpacity>
+  );
+};
+
+const Loader = () => {
+  return (
+    <ActivityIndicator
+      style={styles.loader}
+    />
   );
 };
 
