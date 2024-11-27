@@ -41,6 +41,8 @@ const styles = StyleSheet.create({
   },
 });
 
+const ITEM_HEIGHT = styles.row.marginTop + styles.image.height;
+
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const CharactersList = () => {
   const [movies, setMovies] = useState<Character[]>();
@@ -65,9 +67,19 @@ const CharactersList = () => {
 
   const { isRefreshing, handleRefresh } = useRefresh(getPopular);
 
+  const keyExtractor = useCallback((item: Character) => item.id, []);
+
+  const renderItem = useCallback(({ item }: { item: Character }) => (
+    <CharacterItem {...item} />
+  ), []);
+
+  const getItemLayout = useCallback((data: ArrayLike<Character> | null | undefined, index: number) => (
+    {length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index}
+  ), []);
+
   return (
     <FlatList
-      keyExtractor={item => item.id}
+      keyExtractor={keyExtractor}
       data={movies}
       onEndReached={getPopular}
       onEndReachedThreshold={0.3}
@@ -76,7 +88,9 @@ const CharactersList = () => {
       onRefresh={handleRefresh}
       ListEmptyComponent={<Loader />}
       contentContainerStyle={styles.contentContainer}
-      renderItem={({ item }) => <CharacterItem {...item} />}
+      renderItem={renderItem}
+      getItemLayout={getItemLayout}
+      windowSize={5}
     />
   );
 };
