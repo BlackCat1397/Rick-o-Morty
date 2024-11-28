@@ -1,33 +1,30 @@
-import React from 'react';
-import { SafeAreaView, useColorScheme } from 'react-native';
+import React, { useMemo } from 'react';
+import { SafeAreaView, StyleSheet, useColorScheme } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 
-import CharactersList from './src/CharactersList.tsx';
-import CharacterDetail from './src/CharacterDetail.tsx';
+import { CharactersListScreen, CharacterDetailScreen } from 'src/screens';
 
-export type RootStackParamList = {
-  CharactersList: undefined;
-  CharacterDetail: { id: string };
-};
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-    flex: 1,
-  };
+  const contextualStyles = useMemo(() => StyleSheet.create({
+    background: {
+      backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+      flex: 1,
+    },
+  }), [isDarkMode]);
 
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <SafeAreaView style={contextualStyles.background}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="CharactersList" component={CharactersList} />
-          <Stack.Screen name="CharacterDetail" component={CharacterDetail} />
+          <Stack.Screen name="CharactersList" component={CharactersListScreen} />
+          <Stack.Screen name="CharacterDetail" component={CharacterDetailScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>

@@ -2,12 +2,11 @@ import React from 'react';
 import { Text } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 
-import { RootStackParamList } from '../App.tsx';
-
-type CharacterDetailProps = {
+type CharacterDetailScreenProps = {
   route: RouteProp<RootStackParamList, 'CharacterDetail'>;
 };
-const CharacterDetail = ({ route }: CharacterDetailProps) => {
+
+export const CharacterDetailScreen = ({ route }: CharacterDetailScreenProps) => {
   const { params } = route;
   return (
     <>
@@ -15,5 +14,3 @@ const CharacterDetail = ({ route }: CharacterDetailProps) => {
     </>
   );
 };
-
-export default CharacterDetail;
