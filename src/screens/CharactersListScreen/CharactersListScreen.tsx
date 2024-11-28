@@ -15,7 +15,7 @@ import { CharacterItem } from './components';
 const ITEM_HEIGHT = styles.row.marginTop + styles.image.height;
 
 const CharactersListScreen = () => {
-  const [movies, setMovies] = useState<Character[]>();
+  const [characters, setCharacters] = useState<Character[]>();
 
   const getPopular = useCallback(async () => {
     await delay(1000);
@@ -23,7 +23,7 @@ const CharactersListScreen = () => {
       const {
         data: { results },
       } = await getCharacters();
-      setMovies(results);
+      setCharacters(results);
     } catch (err) {
       console.log(err);
     }
@@ -50,7 +50,7 @@ const CharactersListScreen = () => {
   return (
     <FlatList
       keyExtractor={keyExtractor}
-      data={movies}
+      data={characters}
       onEndReached={getPopular}
       onEndReachedThreshold={0.3}
       scrollEventThrottle={16}
