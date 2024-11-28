@@ -58,6 +58,7 @@ const CharactersListScreen = () => {
       onRefresh={handleRefresh}
       ListEmptyComponent={
         <ActivityIndicator
+          testID="loading-indicator"
           style={styles.loader}
         />
       }
